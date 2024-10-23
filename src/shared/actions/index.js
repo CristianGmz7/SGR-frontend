@@ -1,0 +1,1 @@
+export {getHotelList} from "./hotelsActions";
