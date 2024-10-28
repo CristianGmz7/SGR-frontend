@@ -1,5 +1,3 @@
-//Definición de un hook personalizado. Recordar que un hook es una función que permite "engancharse"
-//al ESTADO y CICLO DE VIDA de los componentes funcionales en React
 //Este hook en particular se encarga de gestionar la lógica relacionada con la obtención de una 
 //lista paginadas de hoteles
 
@@ -45,9 +43,6 @@ const useHotel = (page) => {
         setLoading(false);  //la petición ha finalizado y se puede ocultar el indicar de carga
       });
   }, [page]);
-  // ¿porque page como dependencia? Rta: se garantiza que cuando el valor de page cambia
-  // es decir cuando el usuario navega a una pagina diferente de hoteles, se realizará una
-  // nueva petición a la API para obtener los hoteles correspondientes a esa pagina
 
   return {
     paginatedHotels,

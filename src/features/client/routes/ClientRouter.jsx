@@ -26,9 +26,6 @@ export const ClientRouter = () => {
                 // que hay en este ReservationProvider que se importa desde /client/contexts/reservationContext.jsx
                 <ReservationProvider>
                   <Outlet />
-                  {/* el outlet lo que hace es que si me encuentro en /roomList/: o 
-                  /ReservationList/:hotelId este Outlet se sustituye por uno de estos
-                  Es decir, se cambia por la ruta que este seleccionada en el navegador*/}
                 </ReservationProvider>
               }
             >
@@ -39,9 +36,7 @@ export const ClientRouter = () => {
               <Route path="/ReservationList/:hotelId" element={<ReservationList />} />
             </Route>
             <Route path="/*" element={<Navigate to={"/home"} />} />
-            <Route
-              path="/SideBarReservation/422d4cbf-8ee7-47f6-93c0-1c339b3a03cf"
-              element={<SideBarReservation />}
+            <Route path="/SideBarReservation/" element={<SideBarReservation />}
             />
           </Routes>
         </div>

@@ -1,10 +1,12 @@
 //Aquí es donde se recibe al hook personalizado de Axios
+//SE USA PARA OBTENER LISTA DE HABITACIONES DE UN HOTEL
 // ¿Diferencia entre hook y función? Rta: un hook puede devolver otros hooks como useState
 // una función no puede hacer eso, todos los hooks siempre empiezan con la palabra use
 
 import { useCustomAxios } from "../../../api/base";
 
 export const useRoomList = ({ page , filterStartDate, filterEndDate ,hotelId}) => {
+  
 
   // se roomList es la respuesta del hook, por eso Res al final, a este se le colocan propiedades
   //que necesita: la Url a la que se quiere hacer peticiones, el método que utilizará y los parámetros
@@ -17,9 +19,11 @@ export const useRoomList = ({ page , filterStartDate, filterEndDate ,hotelId}) =
       filterStartDate,
       filterEndDate,
     },
+    
+    
   });
 
-  // roomListRest es un arreglo con dos elementos [{}, refetch], el primero es un objeto y el segundo
+  // roomListRes es un arreglo con dos elementos [{}, refetch], el primero es un objeto y el segundo
   // es una función llamada refetch, que es para una recarga si es que se necesita
   // el objeto de RoomListRes trae {data, loading, error}, similar a lo que se retornaba como se
   // enseñó en clase en el archivo useHotel de /client/hooks.
