@@ -1,6 +1,3 @@
-//En este archivo se hace que otros archivos se enfoquen en lógica de app sin tener que
-//preocuparse por los detalles de las peticiones HTTP
-
 //API es instancia personalizada de Axios configurada para comunicarse con la API
 import { API } from "./base";
 

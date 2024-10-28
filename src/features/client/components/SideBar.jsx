@@ -59,7 +59,7 @@ export const SideBar = () => {
           </span>
         </a>
         <Link
-          to={"/SideBarReservation/422d4cbf-8ee7-47f6-93c0-1c339b3a03cf"}
+          to={"/SideBarReservation/"}
           className="flex items-center gap-4 text-blue-600 hover:text-blue-800 transition-colors duration-300"
         >
           <svg

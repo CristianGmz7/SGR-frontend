@@ -1,5 +1,6 @@
 //este hook se llama cuando se encuentra el usuario en la pagina para confirmar reserva
 //ReservationList
+//solo hace la petición get por medio de AxiosHooks con useCustomAxios
 
 import { useParams } from "react-router-dom";
 import { useCustomAxios } from "../../../api/base";

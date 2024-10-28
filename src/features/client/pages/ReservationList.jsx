@@ -64,6 +64,7 @@ export const ReservationList = () => {
     <div className="max-w-4xl mx-auto p-6 sm:p-8 md:p-10 bg-blue-50 text-foreground rounded-lg shadow-xl">
       <div className="flex items-center justify-between mb-6">
         <Link
+          //a medida se coloquen numeros se regresa la cantidad de "nodos" que se especifique
           to={-1}
           className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
         >

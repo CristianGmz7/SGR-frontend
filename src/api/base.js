@@ -1,6 +1,3 @@
-//este archivo establece la configuración necesaria para realizar peticiones a una API con la
-//librería AXIOS
-
 import axios from "axios";
 import { makeUseAxios } from "axios-hooks";
 const API_URL = "https://localhost:7252/api";
@@ -18,6 +15,7 @@ const API = axios.create({
  //Este es un hook personalizado que toma como argumento la instancia de axios creada anteriormente (API)
 const useCustomAxios = makeUseAxios({
   axios: API,
+  cache: false
 });
 // Este hook anterior (useCustomAxios) se utiliza para obtener el listado de las habitaciones que se utiliza en el hook useRoomList
 

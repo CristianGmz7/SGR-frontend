@@ -20,17 +20,8 @@ export const RoomList = () => {
   // el estado "page" almacena el número de pagina
   const [page, setPage] = useState(1);
 
-  //selectedRooms administrar habitaciones que hay seleccionadas (esta en un contexto)
-  //toggleRoomSelection función para agregar o quitar una habitación  (esta en un contexto)
-  //isRoomSelected función para verificar si una habitación esta seleccionada (esta en un contexto)
-  //setDayInterval setea el intervalo de días que se quiere la reserva
-  // lo anterior se guarda en un estado que se encuentra mas arriba (el contexto)
   const { selectedRooms, toggleRoomSelection, isRoomSelected, setDayInterval } =
     useReservation();
-  //selectedRooms, toggleRoomSelection, isRoomSelected, setDayInterval seria equivalente a
-    //habitaciones seleccionadas, función para agregar o no una habitación , función que determina si la habitación
-      //esta o no seleccionada y una función para setear el rango de fechas
-    //las 4 props que están en el const se vienen de useReservation de reservationContext.jsx
 
   //Crear variable de estado para las fecha inicial y final
   let sDate = new Date();
@@ -38,38 +29,33 @@ export const RoomList = () => {
   //por default la fecha final sea un dia mayor que la inicial
   fDate.setDate(sDate.getDate() + 1);
 
-  //Estado para manejar las fechas de inicio y fin filtradas por el usuario
   //se usa la librería dayjs por la variedad de formatos para representar fechas y horas
-    //ademas de eso permite manipular fechas, sumar o restar días, ademas de facilidad para comparar fechas
-  //las fechas que se crean se colocan el estado de sus fechas correspondientes
   const [startDate, setStartDate] = useState(dayjs(sDate));
   const [finishDate, setFinishDate] = useState(dayjs(fDate));
+
   //Almacena las fechas de filtro   ¿?  (convertidas a formato ISO)
   const [filter, setFilter] = useState({
     startDate: null,
     finishDate: null,
   });
-  // obtiene el id del de la URL hotel usando useParams
+
+  const { hotelId } = useParams();
+  // obtiene el id del de la URL hotel usando useParams, esto viene cuando se da click en ver habitaciones en HotelCard
   // de los parámetros que vienen en la URL trae el id del hotel que se seleccionó
   // esto se ve reflejado en routes/ClientRouter
   //<Route path="/roomList/:hotelId" element={<RoomList />} />
   //el valor de /:hotelId el valor de :hotelId se va a sustituir por el que se coloque en la URL
 
-  const { hotelId } = useParams();
-
   //se le pasa la info del numero de pagina actual, las fechas de filtro y el id del hotel
   //este devuelve un array en el que se encuentra, el error, loading y la data
-
-  // Algo interesante de react es que vuelve a renderizar / ejecutar componentes / funciones
-  //nuevamente si cambian sus parámetros 
-  // es decir useRoomList cada que se cambian sus parámetros (pagina actual, fecha inicio, fecha final u hotel id) 
-    //se recarga nuevamente, es decir, vuelve a ejecutarse
   const [{ error, loading, data }] = useRoomList({
     page: page,
     filterStartDate: filter?.startDate,
     filterEndDate: filter?.finishDate,
     hotelId: hotelId,
   });
+    //se le pasa la info del numero de pagina actual, las fechas de filtro y el id del hotel
+  //este devuelve un array en el que se encuentra, el error, loading y la data
 
   //si todo funciona bien de la respuesta de useRoomList se extrae:
   //en este caso nuestra data del API se encontraba dentro de otra data, por eso va anidada 
