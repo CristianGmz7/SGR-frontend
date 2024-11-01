@@ -9,6 +9,6 @@ import dayjs from "dayjs";
 
 export const formatDate = (isoDateString) => {
   const date = dayjs(isoDateString);
-  // return date.subtract(6, 'hour').format('DD/MM/YY hh:mm');
-  return date.subtract(6, 'hour').format('DD/MM/YY');
+  return date.subtract(6, 'hour').format('DD/MM/YY hh:mm');
+  // return date.subtract(6, 'hour').format('DD/MM/YY');
 }

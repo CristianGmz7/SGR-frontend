@@ -5,6 +5,10 @@ import { ReservationList } from "../pages/ReservationList";
 import { SideBarReservation } from "../pages/SideBarReservation";
 import { Login } from "../pages/Login";
 import { ReservationProvider } from "../contexts/reservationContext";
+import { EditReservation } from "../pages/EditReservation";
+
+// OJO con esta importacion
+import { ReservationEditProvider } from "../contexts/reservationEditContext";
 
 export const ClientRouter = () => {
   return (
@@ -35,9 +39,19 @@ export const ClientRouter = () => {
               <Route path="/roomList/:hotelId" element={<RoomList />} />
               <Route path="/ReservationList/:hotelId" element={<ReservationList />} />
             </Route>
+
+            <Route
+              element={
+                <ReservationEditProvider>
+                  <Outlet/>
+                </ReservationEditProvider>
+              }
+            > 
+              <Route path="/SideBarReservation/" element={<SideBarReservation />}/>
+              <Route path="/editReservation/:reservationId" element={<EditReservation />}/>
+            </Route>
+
             <Route path="/*" element={<Navigate to={"/home"} />} />
-            <Route path="/SideBarReservation/" element={<SideBarReservation />}
-            />
           </Routes>
         </div>
       </div>

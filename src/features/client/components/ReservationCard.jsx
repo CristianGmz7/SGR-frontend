@@ -4,22 +4,19 @@ import { RoomReservationCard } from "./RoomReservationCard";
 import { AdditioServReservationCard } from "./AdditioServReservationCard";
 import { ReservationStatusCard } from "./ReservationStatusCard";
 import { DeleteEditReservationCard } from "./DeleteEditReservationCard";
+import dayjs from "dayjs";
 
 export const ReservationCard = ({reservation}) => {  
 
-  const handleDeleteReservation = () => {
-    console.log('click en eliminar reservacion');
-  }
-
-  const handleEditReservation = () => {
-    console.log('click en editar reservacion');
-  }
-
   const isReservationDisabled = (reservationStartDate) => {
-    const currentDate = new Date();
-    const startDate = new Date(reservationStartDate);
 
-    return startDate < currentDate;
+    const currentDate = new Date().toISOString();
+    const startDate = new Date(reservationStartDate).toISOString();
+
+    const sDatedayjs = dayjs(startDate).subtract(6, 'hour');
+    const cDatedayjs = dayjs(currentDate);    
+
+    return sDatedayjs < cDatedayjs;
   }
 
   const calculateDays = (reservationStartDate, reservationFinishDate) => {
@@ -41,7 +38,8 @@ export const ReservationCard = ({reservation}) => {
     const differenceInDays = differenceInTime / (1000 * 3600 * 24); // 1000 ms/s * 3600 s/h * 24 h/d
   
     return differenceInDays; // Retornar la cantidad de días
-}
+  }
+  
   return (
     <>
       <section className="border rounded-lg p-6 mb-6 shadow-md bg-blue-100">
@@ -92,8 +90,6 @@ export const ReservationCard = ({reservation}) => {
         {/* Editar Borrar Reserva Section */}
         <DeleteEditReservationCard 
           reservation={reservation}
-          handleDeleteReservation={handleDeleteReservation}
-          handleEditReservation={handleEditReservation}
           isReservationDisabled={isReservationDisabled}
         />
       </section>

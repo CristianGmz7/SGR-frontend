@@ -1,3 +1,4 @@
+import { API } from '../../api/base';
 import { reservationsApi } from '../../api/reservationApi'
 
 export const getReservationList = async (page = 1, clientId = "usuarioGenerico") => {
@@ -63,4 +64,19 @@ export const getReservationList = async (page = 1, clientId = "usuarioGenerico")
     console.log(error);
     return error.response;
   }
+}
+
+//este se implementó usando Axios normal
+export const editReservation = async (id, reservationData) => {
+
+  try {
+    const { data } = await API.put(`/reservations/${id}`, reservationData);
+    console.log(data);
+    // return data    //fijarse bien estructura de data
+  } catch (error) {
+    console.error(error);
+    // return error.response;   //fijarse bien estructura de error
+  }
+
+  
 }
