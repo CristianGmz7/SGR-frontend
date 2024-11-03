@@ -1,29 +1,31 @@
 //Esta es pagina que muestra el resumen de la reservación, mostrando las habitaciones seleccionadas
 //asi como servicios adicionales que incluye el hotel
 
-import { Button, Checkbox, CircularProgress } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useReservation } from "../contexts/reservationContext";
 import { useAdditionalServices } from "../hooks/useAdditionalServices";
 import { useSelectedServices } from "../hooks/useSelectedServices";
 import { useCreateReservation } from "../hooks/useCreateReservation";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
+import { AdditionalServices } from "../components/reservation/AdditinoalServices";
 
 export const ReservationList = () => {
   //hook que consume (obtiene) un contexto: useReservation
   const { selectedRooms, daysInterval, dateInterval } = useReservation();
   //useAdditionalServices() trae los servicios adicionales del hotel, hook donde se hace la petición
-  const [{ data, loading }] = useAdditionalServices();
+  const { hotelId } = useParams();
+  const [{ data, loading }] = useAdditionalServices(hotelId);
   //useCreateReservation sirve para crear la reservación
   //ademas del error también devuelve loading, data no porque es el método de crear
   const [{ error }, createMutation] = useCreateReservation();
   //este hook calcula guarda data relacionado a los servicios adicionales seleccionados
   const { selectedServices, toggleService, totalServices } =
     useSelectedServices();
-    
+
   //del hook anterior: selectedServices es para los servicios Seleccionados, el toggleService función para agregar remover servicios
-    //lo que tenga toggle recibe algo, si ya existe lo elimina y si no existe lo agrega
+  //lo que tenga toggle recibe algo, si ya existe lo elimina y si no existe lo agrega
 
   //navigate es una función de react-router-dom para navegar entre las diferentes rutas de la app
   const navigate = useNavigate();
@@ -51,7 +53,7 @@ export const ReservationList = () => {
 
     //se llama a la siguiente función para crear la reserva, que devolvió el objeto {manual: true} en el hook
     //useCreateReservation
-    //se le tiene que pasar un objeto data donde está la información que quiero enviar 
+    //se le tiene que pasar un objeto data donde está la información que quiero enviar
     await createMutation({ data: createDto });
 
     //si la petición anterior falla, no se ejecutará las siguientes dos lineas
@@ -105,45 +107,12 @@ export const ReservationList = () => {
         <h2 className="text-lg font-semibold mb-2 text-blue-600">
           Servicios adicionales
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {loading ? (
-            <div className="flex justify-center items-center h-64">
-              <CircularProgress />
-            </div>
-          ) : (
-            data?.data?.map(({ id, name, price }) => (
-              <div
-                key={id}
-                className="bg-blue-100 rounded-lg p-4 shadow-lg hover:bg-blue-200 transition-colors"
-              >
-                <div className="flex items-center gap-2">
-                  <Checkbox
-                    id={name}
-                    sx={{
-                      color: "#007bff",
-                      "&.Mui-checked": {
-                        color: "#007bff",
-                      },
-                    }}
-                    value={selectedServices.some(
-                      (service) => service.id === id
-                    )}
-                    onChange={() => {
-                      toggleService({ id, name, price });
-                    }}
-                  />
-                  <label
-                    htmlFor={name}
-                    className="text-blue-600 flex justify-between w-full"
-                  >
-                    {name}
-                    <span className="text-end text-lime-600">${price}</span>
-                  </label>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+        <AdditionalServices
+          data={data?.data}
+          toggleService={toggleService}
+          selectedServices={selectedServices}
+          loading={loading}
+        />
       </div>
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div className="bg-blue-100 rounded-lg p-4 shadow-lg">

@@ -1,15 +1,19 @@
-import { reservationsApi } from '../../api/reservationApi'
+import { API, useCustomAxios } from "../../api/base";
+import { reservationsApi } from "../../api/reservationApi";
 
-export const getReservationList = async (page = 1, clientId = "usuarioGenerico") => {
+export const getReservationList = async (
+  page = 1,
+  clientId = "usuarioGenerico"
+) => {
   try {
     // const data = await reservationsApi.getReservations(page, clientId);
-    // console.log(data); 
+    // console.log(data);
     //output de la data: objeto que trae siguientes props config(obj), data(obj), headers(obj), request(obj), status(num), statustext(Str9ng)
     //objeto que interesa es data que trae las siguientes props: data(obj), message(string), status
     //el objeto data trae la estructura que se necesita como la respuesta del DTO
 
     const { data } = await reservationsApi.getReservations(page, clientId);
-    
+
     const paginatedReservations = {
       currentPage: data.data.currentPage,
       hasNextPage: data.data.hasNextPage,
@@ -42,25 +46,57 @@ export const getReservationList = async (page = 1, clientId = "usuarioGenerico")
                 hotelNumberPhone: room.hotelInfo.numberPhone,
                 hotelOverview: room.hotelInfo.overview,
                 hotelDescription: room.hotelInfo.description,
-                hotelImgUrl: room.hotelInfo.imageUrl
-              }
-            }
+                hotelImgUrl: room.hotelInfo.imageUrl,
+              },
+            };
           }),
           //servicios adicionales, aquí se realiza un ternario para saber si vienen elementos (servicios adicionales en la reserva)
-          reservationAdditionalServicesInfoList: reservation?.additionalServicesInfoList?.map((addServ) => ({
+          reservationAdditionalServicesInfoList:
+            reservation?.additionalServicesInfoList?.map((addServ) => ({
               additionalServiceId: addServ.id,
               additionalServiceName: addServ.name,
               additionalServicePrice: addServ.price,
-              additionalServiceHotelId: addServ.hotelId
-          })) ?? []
-        } 
+              additionalServiceHotelId: addServ.hotelId,
+            })) ?? [],
+        };
       }), //fin del return de reservations: data.data.items.map
-    }   //fin del paginatedReservation del try de getReservationList
-    
-    return paginatedReservations
+    }; //fin del paginatedReservation del try de getReservationList
 
+    return paginatedReservations;
   } catch (error) {
-    console.log(error);
     return error.response;
   }
-}
+};
+
+//este se implementó usando Axios normal
+export const useEditReservationMutation = (id) => {
+  return useCustomAxios({
+    url: `/reservations/${id}`,
+    method: "PUT",
+  },{
+    manual: true,
+  });
+
+  // const { data } = await API.put(`/reservations/${id}`, {
+  //   startDate,
+  //   finishDate,
+  //   roomsList,
+  //   additionalServicesList,
+  // });
+};
+
+//este se implementó usando Axios normal
+export const deleteReservation = async (id) => {
+  try {
+    const { data } = await API.delete(`/reservations/${id}`);
+    // return data    //fijarse bien estructura de data
+  } catch (error) {
+    console.error(error);
+    // return error.response;   //fijarse bien estructura de error //wacharse la estructura que dejó Pale
+  }
+};
+
+//en resumen Obtener todas las reservas se usó con AxiosHooks
+//crear una reserva se hizo con AxiosHooks
+//editar una reserva se hizo con Axios normal
+//eliminar una reserva se hizo con Axios normal

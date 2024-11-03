@@ -2,11 +2,9 @@
 //ReservationList
 //solo hace la petición get por medio de AxiosHooks con useCustomAxios
 
-import { useParams } from "react-router-dom";
-import { useCustomAxios } from "../../../api/base";
+ import { useCustomAxios } from "../../../api/base";
 
-export const useAdditionalServices = () => {
-  const { hotelId } = useParams();
+export const useAdditionalServices = (hotelId) => {
   // recordar que el hotelId viene del router
   const additionalServices = useCustomAxios({
     url: `/additionalServices/GetByHotel/${hotelId}`,

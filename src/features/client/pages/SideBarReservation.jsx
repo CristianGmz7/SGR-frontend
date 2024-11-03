@@ -1,11 +1,10 @@
 import Pagination from "@mui/material/Pagination";
 import { usePagination } from "../hooks/usePagination";
-import useGetReservations from '../hooks/useGetReservations'
+import useGetReservations from "../hooks/useGetReservations";
 import { ReservationCard } from "../components/ReservationCard";
 import { CircularProgress } from "@mui/material";
 
 export const SideBarReservation = () => {
-
   //custom hooks
   const { handlePageChange, page } = usePagination();
 
@@ -15,26 +14,25 @@ export const SideBarReservation = () => {
 
   return (
     <div className="container mx-auto p-4 md:p-6 bg-blue-50 text-blue-900 rounded-lg shadow-lg">
-
-      {loading 
-        ? (         
-            <div className="absolute inset-0 flex justify-center items-center bg-white bg-opacity-70">
-              <CircularProgress />
-            </div>
-          )
-        : (
-          paginatedReservations?.reservations?.map((reservation) => {
-            return <ReservationCard key={reservation?.reservationId} reservation={reservation} />;
-          })
-          )
-
-      }
-      
+      {loading ? (
+        <div className="absolute inset-0 flex justify-center items-center bg-white bg-opacity-70">
+          <CircularProgress />
+        </div>
+      ) : (
+        paginatedReservations?.reservations?.map((reservation) => {
+          return (
+            <ReservationCard
+              key={reservation?.reservationId}
+              reservation={reservation}
+            />
+          );
+        })
+      )}
 
       {/* <Pagination /> */}
       <div className="flex flex-row justify-center items-center">
         <Pagination
-        //con la paginación que viene de useGetReservations y que viene de reservationsAction 
+          //con la paginación que viene de useGetReservations y que viene de reservationsAction
           count={paginatedReservations?.totalPages}
           page={paginatedReservations?.currentPage}
           // 5. Cuando el usuario cambia de pagina, el hook usePagination actualiza el estado

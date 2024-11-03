@@ -37,8 +37,7 @@ const useHotel = (page) => {
       })
       .catch((error) => {
         setError(error);  //actualiza el estado del error
-        console.log("error", error);  //imprime valor en consola para facilitar depuración
-      })
+       })
       .finally(() => {
         setLoading(false);  //la petición ha finalizado y se puede ocultar el indicar de carga
       });

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { makeUseAxios } from "axios-hooks";
+import { toast } from "react-toastify";
 const API_URL = "https://localhost:7252/api";
 
 //Manera como se implementó en clase
@@ -10,13 +11,24 @@ const API = axios.create({
     "Content-Type": "application/json",
   },
 });
- //crear un hook personalizado que simplifica el uso de axios en componentes funcionales de React
- //es decir nos ahorra algunos archivos de código extra
- //Este es un hook personalizado que toma como argumento la instancia de axios creada anteriormente (API)
+//crear un hook personalizado que simplifica el uso de axios en componentes funcionales de React
+//es decir nos ahorra algunos archivos de código extra
+//Este es un hook personalizado que toma como argumento la instancia de axios creada anteriormente (API)
 const useCustomAxios = makeUseAxios({
   axios: API,
-  cache: false
+  cache: false,
 });
+
+// haz un interceptor para errores
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response.status === 400) {
+      toast.error(error?.response?.data?.message);
+    }
+    return Promise.reject(error);
+  }
+);
 // Este hook anterior (useCustomAxios) se utiliza para obtener el listado de las habitaciones que se utiliza en el hook useRoomList
 
 export { API_URL, API, useCustomAxios };
