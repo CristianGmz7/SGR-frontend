@@ -27,6 +27,8 @@ API.interceptors.response.use(
       toast.error(error?.response?.data?.message);
     }
     return Promise.reject(error);
+
+    //supongo que aqui van los demas codigos de error: 401, 403, 404
   }
 );
 // Este hook anterior (useCustomAxios) se utiliza para obtener el listado de las habitaciones que se utiliza en el hook useRoomList
