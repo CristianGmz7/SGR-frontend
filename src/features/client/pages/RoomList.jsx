@@ -95,8 +95,8 @@ export const RoomList = () => {
             </h2>
             {/* Descripción del hotel */}
             <p className="text-muted-foreground">{hotel?.description}</p>
-            {/* Inicio Campos de check-in, check-out y botón de filtrar */}
 
+            {/* Inicio Campos de check-in, check-out y botón de filtrar */}
             <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
               {/* Inicio Campo de check-in */}
               <div className="flex flex-col gap-2">
@@ -135,6 +135,8 @@ export const RoomList = () => {
             {/* Fin Campos de check-in, check-out y botón de filtrar */}
           </div>
           {/* Fin de div información hotel y campos de check-in y check-out*/}
+
+
           {/* Inicio de contenedor de habitaciones por paginación */}
           {/* Si la petición del filtro aun esta en curso mostrar carga de la página */}
           {loading ? (
@@ -156,6 +158,8 @@ export const RoomList = () => {
             </div>
           )}
           {/* Fin de contenedor de habitaciones por paginación */}
+
+
           {/* Inicio Botón implementado cuando se selecciona habitaciones */}
           {/* Este botón solo aparece si hay al menos una habitación seleccionada */}
           {selectedRooms.length > 0 && (

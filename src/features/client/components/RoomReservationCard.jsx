@@ -1,6 +1,5 @@
-export const RoomReservationCard = ({ room }) => {
-  return (
-    <div className="border rounded-lg p-4 shadow-md bg-white hover:bg-blue-50 transition-colors">
+export const RoomReservationCard = ({ room, onRemove }) => (
+  <div className="border rounded-lg p-4 shadow-md bg-white hover:bg-blue-50 transition-colors">
     <img
       src={room.roomImgUrl}
       alt={`Habitación ${room.roomId}`}
@@ -11,6 +10,13 @@ export const RoomReservationCard = ({ room }) => {
     <p className="text-blue-600">{room.roomType}</p>
     <p className="text-blue-600">${room.roomPriceNight}</p>
     <p className="text-blue-600">{room.roomHotelInfo.hotelName}</p>
+    {onRemove && (
+      <button
+        onClick={() => onRemove(room.roomId)}
+        className="bg-red-500 text-white rounded-lg px-4 py-2 mt-2"
+      >
+        Borrar
+      </button>
+    )}
   </div>
-  )
-}
+);

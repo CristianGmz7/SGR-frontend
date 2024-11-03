@@ -46,7 +46,7 @@ export const ClientRouter = () => {
                   <Outlet/>
                 </ReservationEditProvider>
               }
-            > 
+            >
               <Route path="/SideBarReservation/" element={<SideBarReservation />}/>
               <Route path="/editReservation/:reservationId" element={<EditReservation />}/>
             </Route>

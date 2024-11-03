@@ -1,10 +1,13 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { useEditReservation } from '../contexts/reservationEditContext'
+import { useEditReservation } from "../contexts/reservationEditContext";
 
-export const DeleteEditReservationCard = ({reservation, isReservationDisabled}) => {
+export const DeleteEditReservationCard = ({
+  reservation,
+  isReservationDisabled,
+}) => {
   const [isEditButtonOpen, setIsEditButtonOpen] = useState(false);
   const [isDeleteButtonOpen, setIsDeleteButtonOpen] = useState(false);
 
@@ -15,7 +18,7 @@ export const DeleteEditReservationCard = ({reservation, isReservationDisabled}) 
     dispatch({
       type: "SET_RESERVATION",
       payload: {
-        reservation,    //se manda la reservación que se haga click
+        reservation, //se manda la reservación que se haga click
         action: actionType,
       },
     });
@@ -29,7 +32,10 @@ export const DeleteEditReservationCard = ({reservation, isReservationDisabled}) 
   const handleEditReservation = () => {
     setIsEditButtonOpen(!isEditButtonOpen);
     setIsDeleteButtonOpen(false);
+    navigate(`/editReservation/${reservation.reservationId}`);
+    handleButtonsEdit("EDIT");
   };
+  const navigate = useNavigate();
 
   return (
     <>
@@ -48,7 +54,6 @@ export const DeleteEditReservationCard = ({reservation, isReservationDisabled}) 
       >
         Eliminar Reserva
       </Button>
-
       <Button
         onClick={handleEditReservation}
         className="absolute right-100"
@@ -60,101 +65,11 @@ export const DeleteEditReservationCard = ({reservation, isReservationDisabled}) 
             backgroundColor: "#fb8c00",
           },
         }}
+    
         disabled={isReservationDisabled(reservation.reservationStartDate)}
       >
         Editar Reserva
       </Button>
-
-      {isEditButtonOpen && (
-        <div className="flex flex-col gap-2 mt-4">
-
-          <Link to={`/editReservation/${reservation.reservationId}`}>
-          <Button
-            onClick={() => handleButtonsEdit("Change-Dates")}
-            className="w-full"
-            variant="contained"
-            sx={{
-              backgroundColor: "#4caf50", // Color verde
-              color: "#fff",
-              "&:hover": {
-                backgroundColor: "#388e3c",
-              },
-            }}
-          >
-            Cambiar fechas
-          </Button>
-          </Link>
-
-          <Link to={`/editReservation/${reservation.reservationId}`}>
-          <Button
-            onClick={() => handleButtonsEdit("Add-Rooms")}
-            className="w-full"
-            variant="contained"
-            sx={{
-              backgroundColor: "#2196f3", // Color azul
-              color: "#fff",
-              "&:hover": {
-                backgroundColor: "#1976d2",
-              },
-            }}
-          >
-            Agregar habitaciones
-          </Button>
-          </Link>
-
-          <Link to={`/editReservation/${reservation.reservationId}`}>
-          <Button
-            onClick={() => handleButtonsEdit("Remove-Rooms")}
-            className="w-full"
-            variant="contained"
-            disabled={reservation.reservationRoomsInfoList.length < 2}
-            sx={{
-              backgroundColor: "#e91e63", // Color rosa
-              color: "#fff",
-              "&:hover": {
-                backgroundColor: "#c2185b",
-              },
-            }}
-          >
-            Quitar habitaciones
-          </Button>
-          </Link>
-
-          <Link to={`/editReservation/${reservation.reservationId}`}>
-          <Button
-            onClick={() => handleButtonsEdit("Add-Additional-Services")}
-            className="w-full"
-            variant="contained"
-            sx={{
-              backgroundColor: "#ff9800", // Color naranja
-              color: "#fff",
-              "&:hover": {
-                backgroundColor: "#fb8c00",
-              },
-            }}
-          >
-            Agregar servicios adicionales
-          </Button>
-          </Link>
-
-          <Link to={`/editReservation/${reservation.reservationId}`}>
-          <Button
-            onClick={() => handleButtonsEdit("Remove-Additional-Services")}
-            className="w-full"
-            variant="contained"
-            sx={{
-              backgroundColor: "#f44336", // Color rojo
-              color: "#fff",
-              "&:hover": {
-                backgroundColor: "#d32f2f",
-              },
-            }}
-          >
-            Quitar servicios adicionales
-          </Button>
-          </Link>
-        </div>
-      )}
 
       {isDeleteButtonOpen && (
         <div className="flex flex-col gap-2 mt-4">

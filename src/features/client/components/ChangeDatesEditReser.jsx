@@ -4,16 +4,12 @@ import dayjs from "dayjs";
 import esMx from "dayjs/locale/es-mx";
 import { useState } from "react";
 
-export const ChangeDatesEditReser = ({ reservation }) => {
-
-  //se extraen las 6 horas para que coincidan con las que mandó el usuario (en el backend siempre llegaran a cuadrar porque se mandaran con el pequeño desfase)
-  const fixedStartDate = dayjs(reservation.reservationStartDate).subtract(6, 'hour');
-  const fixedFinishDate = dayjs(reservation.reservationFinishDate).subtract(6, 'hour');
-
-  //se usa la librería dayjs por la variedad de formatos para representar fechas y horas
-  const [startDate, setStartDate] = useState(fixedStartDate);
-  const [finishDate, setFinishDate] = useState(fixedFinishDate);
-
+export const ChangeDatesEditReser = ({
+  reservation,
+  onChange,
+  state: { startDate, finishDate },
+}) => {
+ 
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={esMx}>
@@ -26,7 +22,12 @@ export const ChangeDatesEditReser = ({ reservation }) => {
             <DatePicker
               value={startDate}
               // cuando se cambie la fecha se setean en el estado de fecha inicial
-              onChange={(newDate) => setStartDate(newDate)}
+              onChange={(newDate) => {
+                onChange({
+                  reservationStartDate: newDate,
+                  reservationFinishDate: finishDate,
+                });
+              }}
               // se le coloca una fecha minima y un formato a mostrar
               minDate={dayjs()}
               format="DD/MM/YYYY"
@@ -42,7 +43,12 @@ export const ChangeDatesEditReser = ({ reservation }) => {
               format="DD/MM/YYYY"
               value={finishDate}
               minDate={startDate}
-              onChange={(newDate) => setFinishDate(newDate)}
+              onChange={(newDate) => {
+                onChange({
+                  reservationStartDate: startDate,
+                  reservationFinishDate: newDate,
+                });
+              }}
             />
           </div>
           {/* Fin Campo de check-out */}
