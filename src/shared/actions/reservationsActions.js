@@ -1,6 +1,7 @@
 import { API, useCustomAxios } from "../../api/base";
 import { reservationsApi } from "../../api/reservationApi";
 
+//AQUI SE HACE EL MAPEO DE LO QUE VIENE DE LA DATA DE OBTENER RESERVACIONES
 export const getReservationList = async (
   page = 1,
   clientId = "usuarioGenerico"
@@ -68,7 +69,7 @@ export const getReservationList = async (
   }
 };
 
-//este se implementó usando Axios normal
+//este se implementó usando Axios Hooks
 export const useEditReservationMutation = (id) => {
   return useCustomAxios({
     url: `/reservations/${id}`,
@@ -86,17 +87,26 @@ export const useEditReservationMutation = (id) => {
 };
 
 //este se implementó usando Axios normal
-export const deleteReservation = async (id) => {
-  try {
-    const { data } = await API.delete(`/reservations/${id}`);
-    // return data    //fijarse bien estructura de data
-  } catch (error) {
-    console.error(error);
-    // return error.response;   //fijarse bien estructura de error //wacharse la estructura que dejó Pale
-  }
+// export const deleteReservation = async (id) => {
+//   try {
+//     const { data } = await API.delete(`/reservations/${id}`);
+//     // return data    //fijarse bien estructura de data
+//   } catch (error) {
+//     console.error(error);
+//     // return error.response;   //fijarse bien estructura de error //wacharse la estructura que dejó Pale
+//   }
+// };
+
+export const useDeleteReservationMutation = (id) => {
+  return useCustomAxios({
+    url: `/reservations/${id}`,
+    method: "DELETE",
+  },{
+    manual: true,
+  });
 };
 
 //en resumen Obtener todas las reservas se usó con AxiosHooks
 //crear una reserva se hizo con AxiosHooks
-//editar una reserva se hizo con Axios normal
-//eliminar una reserva se hizo con Axios normal
+//editar una reserva se hizo con AxiosHooks
+//eliminar una reserva se hizo con AxiosHooks

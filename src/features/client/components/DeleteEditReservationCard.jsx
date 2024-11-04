@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useEditReservation } from "../contexts/reservationEditContext";
+import { useDeleteReservationMutation } from "../../../shared/actions/reservationsActions";
+import { toast } from "react-toastify";
 
 export const DeleteEditReservationCard = ({
   reservation,
@@ -10,6 +12,9 @@ export const DeleteEditReservationCard = ({
 }) => {
   const [isEditButtonOpen, setIsEditButtonOpen] = useState(false);
   const [isDeleteButtonOpen, setIsDeleteButtonOpen] = useState(false);
+
+  //hook para eliminar
+  const [{loading}, deleteReservationMutation] = useDeleteReservationMutation(reservation?.reservationId)
 
   //dispatch para saber que accion se renderizará en el EditReservation
   const { dispatch } = useEditReservation();
@@ -24,7 +29,7 @@ export const DeleteEditReservationCard = ({
     });
   };
 
-  const handleDeleteReservation = () => {
+  const handleOpenDeleteReservation = () => {
     setIsDeleteButtonOpen(!isDeleteButtonOpen);
     setIsEditButtonOpen(false);
   };
@@ -37,10 +42,21 @@ export const DeleteEditReservationCard = ({
   };
   const navigate = useNavigate();
 
+  //aqui se envia el click a la action que se encarga de eliminar
+  const handleDeleteReservation = async () => {
+    const res = await deleteReservationMutation();
+
+    console.info(res);
+
+    toast.info('Reservación editada correctamente');
+
+    navigate("/");
+  }
+
   return (
     <>
       <Button
-        onClick={handleDeleteReservation}
+        onClick={handleOpenDeleteReservation}
         className="absolute right-100"
         variant="contained"
         sx={{
@@ -79,6 +95,7 @@ export const DeleteEditReservationCard = ({
           <Button
             className="w-full"
             variant="contained"
+            onClick={handleDeleteReservation}
             sx={{
               backgroundColor: "#f44336", // Color rojo para confirmación
               color: "#fff",
@@ -90,7 +107,7 @@ export const DeleteEditReservationCard = ({
             Confirmar Eliminación
           </Button>
           <Button
-            onClick={handleDeleteReservation}
+            onClick={handleOpenDeleteReservation}
             className="w-full"
             variant="contained"
             sx={{

@@ -22,3 +22,5 @@ export const RemoveRoomsEditReservation = ({ reservation }) => {
     </>
   );
 };
+
+// ELIMINAR ESTE COMPONENTE CREO
