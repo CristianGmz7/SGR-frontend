@@ -63,6 +63,7 @@ export const EditReservation = () => {
       name: service.additionalServiceName,
     }));
 
+  //aqui se hace la petición al action para editar
   const handleEditReservation = async () => {
     const dto = {
       startDate: reservation?.reservationStartDate,
@@ -77,6 +78,8 @@ export const EditReservation = () => {
     };
     // console.info(dto);
     // return;
+
+    //el editReservationMutation se nombró asi en el hook
     const res = await editReservationMutation({
       data: dto,
     });
@@ -228,12 +231,9 @@ export const EditReservation = () => {
               });
             }}
           />
-          {/* {renderActionComponent(action)} */}
-          {/* Muestra la acción actual, como "Cambiar fechas", "Agregar habitaciones", etc. */}
         </div>
       )}
 
-      {/* AGREGAR BOTON CON UNA FUNCION QUE AL HACER CLICK SE HAGA EL ENVIO DE LA PETICION AL BACKEND */}
       <Button
         variant="contained"
         color="warning"
@@ -252,7 +252,7 @@ export const EditReservation = () => {
           });
         }}
       >
-        Cancelar
+        Reserva inicial
       </Button>
       <p>
         Este boton necesita validacion de que la data original sea diferente a
