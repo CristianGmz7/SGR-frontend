@@ -2,6 +2,7 @@ import { API, useCustomAxios } from "../../api/base";
 import { reservationsApi } from "../../api/reservationApi";
 
 //AQUI SE HACE EL MAPEO DE LO QUE VIENE DE LA DATA DE OBTENER RESERVACIONES
+//aqui se debe de alguna manera deserializar el id del usuario
 export const getReservationList = async (
   page = 1,
   clientId = "usuarioGenerico"

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getReservationList } from "../../../shared/actions";
 
+//esto si es un hook solo renoombrar el archivo
+
 const useGetReservations = (page = 1, clientId= "") => {
 
   const [paginatedReservations, setReservations] = useState();

@@ -15,6 +15,7 @@ import { useReservation } from "../contexts/reservationContext";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import RoomCard from "../components/RoomCard";
+import { useAuthStore } from "../../security/store/useAuthStore";
 
 export const RoomList = () => {
   // el estado "page" almacena el número de pagina
@@ -80,6 +81,9 @@ export const RoomList = () => {
       finishDate: finishDate.toISOString(),
     });
   };
+
+  //autenticación para crear reservas
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
   return (
     //LocalizationProvider para configurar el idioma de los DatePickers
@@ -153,6 +157,8 @@ export const RoomList = () => {
                   //y si fue clicqueada o no
                   isRoomSelected={isRoomSelected}
                   toggleRoomSelection={toggleRoomSelection} 
+                  //autenticacion para crear reservas
+                  isAuthenticated={isAuthenticated}
                 />
               ))}
             </div>
@@ -162,7 +168,7 @@ export const RoomList = () => {
 
           {/* Inicio Botón implementado cuando se selecciona habitaciones */}
           {/* Este botón solo aparece si hay al menos una habitación seleccionada */}
-          {selectedRooms.length > 0 && (
+          {isAuthenticated && selectedRooms.length > 0 && (
             <div className="mt-8">
               {/* la siguiente vinculación se encuentra dentro del context, por lo que los estados
               aun quedan guardados, como el de fechas, habitaciones seleccionadas */}

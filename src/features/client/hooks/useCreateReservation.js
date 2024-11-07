@@ -1,4 +1,5 @@
 //esta hook se hace cuando se le da confirmar a la reserva
+//AL FINAL ESTO DEBERIA IR en ACTIONS y no EN HOOKS
 
 import { useCustomAxios } from "../../../api/base";
 

@@ -3,7 +3,6 @@ import { Footer, Nav, SideBar } from "../components";
 import { HomePage, RoomList } from "../pages";
 import { ReservationList } from "../pages/ReservationList";
 import { SideBarReservation } from "../pages/SideBarReservation";
-import { Login } from "../pages/Login";
 import { ReservationProvider } from "../contexts/reservationContext";
 import { EditReservation } from "../pages/EditReservation";
 
@@ -21,7 +20,6 @@ export const ClientRouter = () => {
         <div className="flex-1 ml-14 md:ml-48">
           <Routes>
             {/* Define rutas individuales */}
-            <Route path="/login" element={<Login />} />
             <Route path="/home" element={<HomePage />} />
             {/* Esta ruta no tienen ningún path pero tiene un element 
             El useState de reservationContext.jsx se encuentra dentro del Route que no tiene path*/}
